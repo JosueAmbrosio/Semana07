@@ -1,0 +1,35 @@
+﻿<Window x:Class="Semana07.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Semana07"
+        mc:Ignorable="d"
+        Title="Customers" Height="500" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Search controls -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid -->
+        </Grid.RowDefinitions>
+
+        <!-- Top panel with search box and button -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Search by name:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBox x:Name="txtName" Width="200" Margin="0,0,10,0"/>
+            <Button Content="Search" Width="100" Click="BtnSearch_Click"/>
+        </StackPanel>
+
+        <!-- DataGrid for displaying results -->
+        <DataGrid x:Name="dgCustomers" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding CustomerId}" Width="50"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="150"/>
+                <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="70"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
