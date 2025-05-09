@@ -5,24 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Semana07"
         mc:Ignorable="d"
-        Title="Customers" Height="500" Width="800">
-    <Grid Margin="10">
+        Title="Customers" Height="550" Width="800">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Search controls -->
+            <!-- Search -->
+            <RowDefinition Height="Auto"/>
+            <!-- Insert Form -->
             <RowDefinition Height="*"/>
             <!-- DataGrid -->
         </Grid.RowDefinitions>
 
-        <!-- Top panel with search box and button -->
+        <!-- Search Panel -->
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="Search by name:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <TextBox x:Name="txtName" Width="200" Margin="0,0,10,0"/>
-            <Button Content="Search" Width="100" Click="BtnSearch_Click"/>
+            <TextBox x:Name="txtName" Width="150" Margin="0,0,10,0" Height="25"/>
+            <Button Content="Search" Width="80" Click="BtnSearch_Click" Margin="0,0,10,0"/>
+            <Button Content="List All" Width="80" Click="BtnListar_Click"/>
         </StackPanel>
 
-        <!-- DataGrid for displaying results -->
-        <DataGrid x:Name="dgCustomers" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+        <!-- Insert Customer Form -->
+        <Grid Grid.Row="1" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Name -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+            <TextBox x:Name="txtNewName" Grid.Row="0" Grid.Column="1" Height="25" Margin="0,0,20,5"/>
+
+            <!-- Address -->
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Address:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+            <TextBox x:Name="txtNewAddress" Grid.Row="0" Grid.Column="3" Height="25" Margin="0,0,20,5"/>
+
+            <!-- Phone -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Phone:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox x:Name="txtNewPhone" Grid.Row="1" Grid.Column="1" Height="25" Margin="0,0,20,0"/>
+
+            <!-- Add Button -->
+            <Button Content="Add Customer"
+                    Grid.Row="1" Grid.Column="3"
+                    Width="120" Height="28"
+                    HorizontalAlignment="Left"
+                    Click="BtnAddCustomer_Click"/>
+        </Grid>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="dgCustomers" Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  HeadersVisibility="Column"
+                  RowHeight="30"
+                  ColumnHeaderHeight="30">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding CustomerId}" Width="50"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
