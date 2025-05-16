@@ -1,68 +1,35 @@
 ﻿<Window x:Class="Semana07.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Semana07"
-        mc:Ignorable="d"
-        Title="Customers" Height="550" Width="800">
-    <Grid Margin="15">
+        Title="Customers" Height="600" Width="800">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Search -->
             <RowDefinition Height="Auto"/>
-            <!-- Insert Form -->
             <RowDefinition Height="*"/>
-            <!-- DataGrid -->
         </Grid.RowDefinitions>
 
         <!-- Search Panel -->
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="Search by name:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <TextBox x:Name="txtName" Width="150" Margin="0,0,10,0" Height="25"/>
+            <TextBox x:Name="txtName" Width="150" Margin="0,0,10,0"/>
             <Button Content="Search" Width="80" Click="BtnSearch_Click" Margin="0,0,10,0"/>
             <Button Content="List All" Width="80" Click="BtnListar_Click"/>
         </StackPanel>
 
-        <!-- Insert Customer Form -->
-        <Grid Grid.Row="1" Margin="0,0,0,15">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <!-- Name -->
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center" Margin="0,0,5,5"/>
-            <TextBox x:Name="txtNewName" Grid.Row="0" Grid.Column="1" Height="25" Margin="0,0,20,5"/>
-
-            <!-- Address -->
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="Address:" VerticalAlignment="Center" Margin="0,0,5,5"/>
-            <TextBox x:Name="txtNewAddress" Grid.Row="0" Grid.Column="3" Height="25" Margin="0,0,20,5"/>
-
-            <!-- Phone -->
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Phone:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <TextBox x:Name="txtNewPhone" Grid.Row="1" Grid.Column="1" Height="25" Margin="0,0,20,0"/>
-
-            <!-- Add Button -->
-            <Button Content="Add Customer"
-                    Grid.Row="1" Grid.Column="3"
-                    Width="120" Height="28"
-                    HorizontalAlignment="Left"
-                    Click="BtnAddCustomer_Click"/>
-        </Grid>
+        <!-- Action Buttons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
+            <Button Content="Create" Width="80" Click="BtnCreate_Click" Margin="0,0,10,0"/>
+            <Button Content="Update" Width="80" Click="BtnUpdate_Click" Margin="0,0,10,0"/>
+            <Button Content="Delete" Width="80" Click="BtnDelete_Click"/>
+        </StackPanel>
 
         <!-- DataGrid -->
         <DataGrid x:Name="dgCustomers" Grid.Row="2"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   CanUserAddRows="False"
+                  SelectionMode="Single"
                   HeadersVisibility="Column"
                   RowHeight="30"
                   ColumnHeaderHeight="30">
@@ -71,7 +38,8 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*"/>
                 <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="150"/>
-                <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="70"/>
+                <!-- Ocultamos el campo Active -->
+                <!--<DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="70"/>-->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

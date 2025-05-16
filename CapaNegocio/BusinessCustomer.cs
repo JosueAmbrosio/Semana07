@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CapaEntidades;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CapaNegocio
 {
@@ -30,8 +31,43 @@ namespace CapaNegocio
 
         public void AddCustomer(Customer customer)
         {
+            List<Customer> existing = GetCustomersByName(customer.Name);
+
+            // Si ya existe activo, no se permite
+            if (existing.Any(c => c.Name.Equals(customer.Name, StringComparison.OrdinalIgnoreCase) && c.Active))
+            {
+                throw new Exception("El cliente con ese nombre ya existe.");
+            }
+
+            // Si existe INACTIVO, lo reactivamos y actualizamos datos
+            Customer inactive = existing.FirstOrDefault(c => c.Name.Equals(customer.Name, StringComparison.OrdinalIgnoreCase) && !c.Active);
+            if (inactive != null)
+            {
+                inactive.Address = customer.Address;
+                inactive.Phone = customer.Phone;
+                inactive.Active = true;
+                UpdateCustomer(inactive);
+            }
+            else
+            {
+                // Si no existe, lo creamos
+                DataCustomer dataCustomers = new DataCustomer();
+                dataCustomers.AddCustomer(customer);
+            }
+        }
+
+
+
+        public void UpdateCustomer(Customer customer)
+        {
             DataCustomer dataCustomers = new DataCustomer();
-            dataCustomers.AddCustomer(customer);
+            dataCustomers.UpdateCustomer(customer);
+        }
+
+        public void DeleteCustomer(Customer customer)
+        {
+            DataCustomer dataCustomers = new DataCustomer();
+            dataCustomers.DeleteCustomer(customer.CustomerId);
         }
 
     }

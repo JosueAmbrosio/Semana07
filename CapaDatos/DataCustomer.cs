@@ -14,7 +14,7 @@ public class DataCustomer
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            SqlCommand command = new SqlCommand("GetCustomers", connection);
+            SqlCommand command = new SqlCommand("GetCustomersByName", connection);
             command.CommandType = CommandType.StoredProcedure;
 
             connection.Open();
@@ -38,16 +38,19 @@ public class DataCustomer
         return list;
     }
 
-    public List<Customer> GetCustomersByName(String name)
+    public List<Customer> GetCustomersByName(string name)
     {
         var list = new List<Customer>();
+
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             SqlCommand command = new SqlCommand("GetCustomersByName", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@name", name);
+
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
+
             while (reader.Read())
             {
                 list.Add(new Customer
@@ -59,8 +62,10 @@ public class DataCustomer
                     Active = Convert.ToBoolean(reader["active"])
                 });
             }
+
             reader.Close();
         }
+
         return list;
     }
 
@@ -70,10 +75,43 @@ public class DataCustomer
         {
             SqlCommand command = new SqlCommand("InsertCustomer", connection);
             command.CommandType = CommandType.StoredProcedure;
+
             command.Parameters.AddWithValue("@name", customer.Name);
             command.Parameters.AddWithValue("@address", customer.Address);
             command.Parameters.AddWithValue("@phone", customer.Phone);
             command.Parameters.AddWithValue("@active", customer.Active);
+
+            connection.Open();
+            command.ExecuteNonQuery();
+        }
+    }
+
+    public void UpdateCustomer(Customer customer)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand("UpdateUser", connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@Customer_id", customer.CustomerId);
+            command.Parameters.AddWithValue("@Name", (object)customer.Name ?? DBNull.Value);
+            command.Parameters.AddWithValue("@Address", (object)customer.Address ?? DBNull.Value);
+            command.Parameters.AddWithValue("@Phone", (object)customer.Phone ?? DBNull.Value);
+
+            connection.Open();
+            command.ExecuteNonQuery();
+        }
+    }
+
+    public void DeleteCustomer(int customerId)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand("DeleteUser", connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@Customer_id", customerId);
+
             connection.Open();
             command.ExecuteNonQuery();
         }
